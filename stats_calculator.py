@@ -1,13 +1,27 @@
 # Calculator For All Static Tests
 import math, statistics as stats, numpy as np
+from scipy.stats import norm
 
-options = ["mean", "median", "mode", "min", "max", "range", "variance", "standard deviation", "r"]
+options = ["mean", "median", "mode", "min", "max", "range", "variance", "standard deviation", "r", "normcdf", "normpdf", "invnorm"]
+# options = ["basics", "graph coordinates", "probability"]
+# basics = ["mean", "median", "mode", "min", "max", "range", "variance", "standard deviation"]
+# graph_coordinates = ["r"]
+# probability = ["normcdf", "normpdf", "invnorm"]
+
+
+def infinity_check (string):
+    if string == "+inf":
+        return math.inf
+    elif string == "-inf":
+        return -math.inf
+    else:
+        return int(string)
 
 while True:
     print(f"Options: {options}")
     solving = input("What do you want to solve? ")
 
-    # || For One List
+    # || Basics
     if options.index(solving) < 8:
         array = list(map(int, input("What is the list? (enter with one space in between)\n").split(" ")))
 
@@ -49,7 +63,25 @@ while True:
             else:
                 print(f"The correlation coefficient of that data set is weak, r = {np.corrcoef(x, y)[0, 1]}\n")
 
-            
+    # || Probability
+    if options.index(solving) < 12:
+
+        if solving == "normcdf":
+            lower = infinity_check(input("What is the lower bound? (+inf for positive infinity, -inf for negative infinity) "))
+            upper = infinity_check(input("What is the upper bound? (+inf for positive infinity, -inf for negative infinity) "))
+            print(f"The probability of data in between those bounds is {norm.cdf(upper) - norm.cdf(lower)}\n")
+
+        if solving == "normpdf":
+            variable = infinity_check(input("What is the variable? (+inf for positive infinity, -inf for negative infinity) "))
+            print(f"The probability of that variable is {1 - norm.cdf(variable)}\n")
+
+        if solving == "invnorm":
+            region = float(input("What is the probabilty region? (+inf for positive infinity, -inf for negative infinity) "))
+            print(f"The x value of that region is {norm.ppf(region)}\n")
+
+
+
+
 
     else:
         print("Pick one from the options above\n")

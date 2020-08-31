@@ -1,11 +1,12 @@
 # Calculator For All Static Tests
 import math, statistics as stats, numpy as np
 from scipy.stats import norm
+from itertools import permutations, combinations
 
 menu = ["basics", "graph coordinates", "probability"]
 basics = ["mean", "median", "mode", "min", "max", "range", "variance", "standard deviation"]
 graph_coordinates = ["r"]
-probability = ["normcdf", "normpdf", "invnorm"]
+probability = ["permutations", "combinations", "normcdf", "normpdf", "invnorm"]
 
 # || Functions
 def infinity_check (string):
@@ -97,6 +98,21 @@ while True:
             continue
 
         # || Conditions
+        if solving == "permutations":
+            array = list(input("What is the list you want the permutations of? (enter with one space in between) ").split(" "))
+            perm = permutations(array)
+            print("The permutations of that list is:")
+            for i in perm:
+                print(i)
+
+        if solving == "combinations":
+            array = list(input("What is the list you want the combinations of? (enter with one space in between) ").split(" "))
+            length = int(input("What is the length that you want the list to be? "))
+            comb = combinations(array, length)
+            print("The combinations of that list is:")
+            for i in comb:
+                print(i)
+
         if solving == "normcdf":
             lower = infinity_check(input("What is the lower bound? (+inf for positive infinity, -inf for negative infinity) "))
             upper = infinity_check(input("What is the upper bound? (+inf for positive infinity, -inf for negative infinity) "))

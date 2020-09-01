@@ -3,10 +3,11 @@ import math, statistics as stats, numpy as np
 from scipy.stats import norm
 from itertools import permutations, combinations
 
-menu = ["basics", "graph coordinates", "probability"]
+menu = ["basics", "graph coordinates", "probability", "statistics"]
 basics = ["mean", "median", "mode", "min", "max", "range", "variance", "standard deviation"]
 graph_coordinates = ["r"]
 probability = ["permutations", "combinations", "normcdf", "normpdf", "invnorm"]
+statistics = ["one var stats", "two var stats"]
 
 # || Functions
 def infinity_check (string):
@@ -125,6 +126,29 @@ while True:
         elif solving == "invnorm":
             region = float(input("What is the probabilty region? (+inf for positive infinity, -inf for negative infinity) "))
             print(f"The x value of that region is {norm.ppf(region)}")
+
+    # || Statistics
+    elif option == "statistics":
+        print(f"Options: {statistics}")
+        solving = input("What do you want to solve?  (type 'back' to go back) ")
+
+        if solving == "back":
+            continue
+
+        if solving not in statistics:
+            print("Pick one from the options above")
+            continue
+
+        # || Conditions
+        if solving == "one var stats":
+            array = list(map(int, input("What is the list? (enter with one space in between)\n").split(" ")))
+            c1 = ["Mean", "Summation", "Standard deviation", "Length", "Min", "Q1", "Median", "Q3", "Max"]
+            c2 = [stats.mean(array), sum(array), stats.stdev(array), len(array), min(array), 
+                    np.percentile(array, 25), stats.median(array), np.percentile(array, 75), max(array)]
+
+            for i in range(9):
+                row = "{:19} {:f}".format(c1[i], c2[i])
+                print(row)
 
 
 
